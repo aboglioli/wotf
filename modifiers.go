@@ -1,6 +1,8 @@
 package main
 
-import "strings"
+import (
+	"strings"
+)
 
 type Modifier func(str string) string
 type ModifierFactory func(arg string) Modifier
@@ -37,6 +39,15 @@ func capitalize(str string) string {
 
 func duplicate(str string) string {
 	return str + str
+}
+
+func invert(str string) string {
+	r := make([]rune, len(str))
+
+	for i, c := range str {
+		r[len(str)-i-1] = c
+	}
+	return string(r)
 }
 
 // Modifiers with args

@@ -11,6 +11,7 @@ var simpleModifiers = map[string]Modifier{
 	"u": upper,
 	"c": capitalize,
 	"d": duplicate,
+	"i": invert,
 }
 
 var modifierFactories = map[string]ModifierFactory{
