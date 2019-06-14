@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -12,6 +13,7 @@ func main() {
 	filename := flag.String("f", "", "wordlist")
 	text := flag.String("t", "", "text: one,two,three,...")
 	modifierNames := flag.String("m", "", "modifier names")
+	info := flag.Bool("i", false, "print information")
 	flag.Parse()
 
 	var strs []string
@@ -40,6 +42,15 @@ func main() {
 
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	if *info {
+		ls, lm := len(strs), len(modifiers)
+		fmt.Printf("%d words will be modified.\n", ls)
+		fmt.Printf("%d modifiers will be applied.\n", lm)
+		fmt.Printf("%d words will be generated.\n", ls*lm)
+		fmt.Printf("%d total words.\n", ls*lm+ls)
+		os.Exit(0)
 	}
 
 	for _, str := range strs {

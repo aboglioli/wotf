@@ -9,6 +9,7 @@ var simpleModifiers = map[string]Modifier{
 	// Simple
 	"l": lower,
 	"u": upper,
+	"c": capitalize,
 	"d": duplicate,
 }
 

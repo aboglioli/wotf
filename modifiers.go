@@ -22,7 +22,24 @@ func applyModifiers(modifiers []Modifier, str string) []string {
 	return strs
 }
 
-// Modifiers
+// Simple modifiers
+func upper(str string) string {
+	return strings.ToUpper(str)
+}
+
+func lower(str string) string {
+	return strings.ToLower(str)
+}
+
+func capitalize(str string) string {
+	return strings.ToUpper(string(str[0])) + str[1:]
+}
+
+func duplicate(str string) string {
+	return str + str
+}
+
+// Modifiers with args
 func appendStr(a string) Modifier {
 	return func(str string) string {
 		return str + a
@@ -33,18 +50,6 @@ func prependStr(p string) Modifier {
 	return func(str string) string {
 		return p + str
 	}
-}
-
-func upper(str string) string {
-	return strings.ToUpper(str)
-}
-
-func lower(str string) string {
-	return strings.ToLower(str)
-}
-
-func duplicate(str string) string {
-	return str + str
 }
 
 func duplicateWithSeparator(sep string) Modifier {
