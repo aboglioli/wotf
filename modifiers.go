@@ -75,12 +75,18 @@ func duplicateWithSeparator(sep string) Modifier {
 
 func removePrefix(prefix string) Modifier {
 	return func(str string) string {
+		if !strings.HasPrefix(str, prefix) {
+			return ""
+		}
 		return strings.TrimPrefix(str, prefix)
 	}
 }
 
 func removeSuffix(suffix string) Modifier {
 	return func(str string) string {
+		if !strings.HasSuffix(str, suffix) {
+			return ""
+		}
 		return strings.TrimSuffix(str, suffix)
 	}
 }
