@@ -19,7 +19,11 @@ func concat(modifiers []Modifier) Modifier {
 func applyModifiers(modifiers []Modifier, str string) []string {
 	strs := make([]string, 0)
 	for _, modifier := range modifiers {
-		strs = append(strs, modifier(str))
+		m := modifier(str)
+
+		if m != "" {
+			strs = append(strs, m)
+		}
 	}
 	return strs
 }
