@@ -10,35 +10,57 @@ import (
 )
 
 func main() {
-	filename := flag.String("f", "", "wordlist")
+	// Text to modify
+	wordlist := flag.String("w", "", "wordlist")
 	text := flag.String("t", "", "text: one,two,three,...")
+
+	// Modifieres
 	modifierNames := flag.String("m", "", "modifier names")
+	modifiersFile := flag.String("mf", "", "modifiers file")
+
+	// Extra
 	info := flag.Bool("i", false, "print information")
+
 	flag.Parse()
 
 	var strs []string
 
-	if *filename != "" {
-		data, err := ioutil.ReadFile(*filename)
+	if *wordlist != "" {
+		data, err := ioutil.ReadFile(*wordlist)
 
 		if err != nil {
 			log.Fatal("Filename not found")
+			os.Exit(1)
 		}
 
 		strs = strings.Split(string(data), "\n")
 	} else if *text != "" {
 		strs = strings.Split(*text, ",")
 	} else {
-		panic("Filename or text must be specified")
+		panic("Wordlist or text must be specified")
 	}
 
-	if *modifierNames == "" {
+	if *modifierNames == "" && *modifiersFile == "" {
 		panic("Modifiers must be specified")
 	}
 
-	strs = removeEmptyStrings(strs)
+	instructions := *modifierNames
 
-	modifiers, err := parse(*modifierNames)
+	if *modifiersFile != "" {
+		data, err := ioutil.ReadFile(*modifiersFile)
+
+		if err != nil {
+			log.Fatal("Error opening modifiers file")
+			os.Exit(1)
+		}
+
+		instructions = strings.ReplaceAll(string(data), "\n", ";")
+		instructions = instructions[:len(instructions)-1] // remove last ;
+		fmt.Println(instructions)
+	}
+
+	strs = removeEmptyStrings(strs)
+	modifiers, err := parse(instructions)
 
 	if err != nil {
 		log.Fatal(err)
